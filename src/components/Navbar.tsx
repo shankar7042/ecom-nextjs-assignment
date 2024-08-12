@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import NavCartBtn from "./NavCartBtn";
 
 const Navbar = () => {
   return (
@@ -19,12 +20,7 @@ const Navbar = () => {
             Home
           </Link>
         </div>
-        <Link
-          href="/cart"
-          className="px-4 py-2 bg-yellow-400 text-white rounded-md hover:bg-yellow-300 transition duration-300"
-        >
-          Cart
-        </Link>
+        <NavCartBtn />
       </div>
     </nav>
   );

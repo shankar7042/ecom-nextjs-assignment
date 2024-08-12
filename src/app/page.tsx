@@ -1,16 +1,12 @@
 import ProductListing from "@/components/ProductListing";
-import { IProduct } from "@/types/product";
-
-const LIMIT_PRODUCTS = 15;
-const PRODUCT_URL = `https://dummyjson.com/products?limit=${LIMIT_PRODUCTS}`;
+import { fetchProducts } from "@/utils/productUtils";
 
 export default async function Home() {
-  const res = await fetch(PRODUCT_URL);
-  const data = await res.json();
+  const products = await fetchProducts();
 
   return (
     <main className="w-[80%] mx-auto py-6">
-      <ProductListing products={data.products} />
+      <ProductListing products={products} />
     </main>
   );
 }

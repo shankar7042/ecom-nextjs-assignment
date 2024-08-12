@@ -1,8 +1,17 @@
 "use client";
 
-const AddToCartBtn = () => {
+import { useCartContext } from "@/hooks/useCartContext";
+import { IProduct } from "@/types/product";
+
+interface AddToCartBtnProps {
+  product: IProduct;
+}
+
+const AddToCartBtn: React.FC<AddToCartBtnProps> = ({ product }) => {
+  const { addToCart } = useCartContext();
+
   const handleClick = () => {
-    console.log("Add to cart");
+    addToCart(product.id);
   };
 
   return (

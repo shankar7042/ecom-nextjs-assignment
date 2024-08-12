@@ -26,7 +26,7 @@ const SingleProduct: React.FC<SingleProductProps> = ({ product }) => {
             Price: <span className="font-semibold">${product.price}</span>
           </p>
         </div>
-        <AddToCartBtn />
+        <AddToCartBtn product={product} />
       </div>
     </li>
   );
