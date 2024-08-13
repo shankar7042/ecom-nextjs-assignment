@@ -1,5 +1,6 @@
 import { ProductWithQuantity } from "@/context/CartContext";
 import { useCartContext } from "@/hooks/useCartContext";
+import { formatCurrency } from "@/utils/helpers";
 
 interface CartActionsProps {
   product: ProductWithQuantity;
@@ -41,7 +42,7 @@ const CartActions: React.FC<CartActionsProps> = ({ product }) => {
         </button>
       </div>
       <div>
-        <p className="font-semibold">${totalPrice.toFixed(2)}</p>
+        <p className="font-semibold">{formatCurrency(totalPrice)}</p>
       </div>
       <div>
         <button
