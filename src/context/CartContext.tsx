@@ -1,7 +1,5 @@
 "use client";
 
-import { IProduct } from "@/types/product";
-import { fetchProductById } from "@/utils/productUtils";
 import {
   createContext,
   PropsWithChildren,
@@ -9,6 +7,9 @@ import {
   useMemo,
   useState,
 } from "react";
+
+import { IProduct } from "@/types/product";
+import { fetchProductById } from "@/utils/productUtils";
 
 interface CartProduct {
   id: number;
@@ -22,6 +23,9 @@ export interface ProductWithQuantity extends IProduct {
 interface ICartContext {
   cartProducts: CartProduct[];
   addToCart: (id: number) => void;
+  deleteFromCart: (id: number) => void;
+  incrementCartItem: (id: number) => void;
+  decrementCartItem: (id: number) => void;
   totalQuantity: number;
   allCartItemProducts: () => Promise<ProductWithQuantity[]>;
 }
@@ -29,6 +33,9 @@ interface ICartContext {
 export const CartContext = createContext<ICartContext>({
   cartProducts: [],
   addToCart: (id: number) => {},
+  deleteFromCart: (id: number) => {},
+  incrementCartItem: (id: number) => {},
+  decrementCartItem: (id: number) => {},
   totalQuantity: 0,
   allCartItemProducts: async () => [],
 });
@@ -38,7 +45,7 @@ export const CartContextProvider: React.FC<PropsWithChildren> = ({
 }) => {
   const [cartProducts, setCartProducts] = useState<CartProduct[]>([]);
 
-  const addToCart = (prodId: number) => {
+  const addToCart = useCallback((prodId: number) => {
     setCartProducts((prevProd) => {
       if (prevProd.findIndex((prod) => prod.id === prodId) === -1) {
         return [...prevProd, { id: prodId, quantity: 1 }];
@@ -51,7 +58,37 @@ export const CartContextProvider: React.FC<PropsWithChildren> = ({
         }
       });
     });
-  };
+  }, []);
+
+  const deleteFromCart = useCallback((id: number) => {
+    setCartProducts((prevProducts) =>
+      prevProducts.filter((prod) => prod.id !== id)
+    );
+  }, []);
+
+  const incrementCartItem = useCallback((id: number) => {
+    setCartProducts((prevProducts) =>
+      prevProducts.map((prod) =>
+        prod.id === id ? { ...prod, quantity: prod.quantity + 1 } : prod
+      )
+    );
+  }, []);
+
+  const decrementCartItem = useCallback(
+    (id: number) => {
+      const item = cartProducts.find((it) => it.id === id);
+      if (item?.quantity === 1) {
+        deleteFromCart(id);
+      } else {
+        setCartProducts((prevProducts) =>
+          prevProducts.map((prod) =>
+            prod.id === id ? { ...prod, quantity: prod.quantity - 1 } : prod
+          )
+        );
+      }
+    },
+    [cartProducts, deleteFromCart]
+  );
 
   const allCartItemProducts = useCallback(async () => {
     const products = await Promise.all(
@@ -72,7 +109,15 @@ export const CartContextProvider: React.FC<PropsWithChildren> = ({
 
   return (
     <CartContext.Provider
-      value={{ cartProducts, addToCart, totalQuantity, allCartItemProducts }}
+      value={{
+        cartProducts,
+        addToCart,
+        totalQuantity,
+        allCartItemProducts,
+        deleteFromCart,
+        incrementCartItem,
+        decrementCartItem,
+      }}
     >
       {children}
     </CartContext.Provider>
