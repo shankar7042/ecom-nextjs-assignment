@@ -9,8 +9,8 @@ interface CartItemProps {
 
 const CartItem: React.FC<CartItemProps> = ({ product }) => {
   return (
-    <div className="flex items-center gap-4">
-      <div className="border p-2 w-[200px] aspect-square">
+    <div className="grid grid-cols-[1fr_3fr_2fr_1fr_1fr] gap-2 items-center place-items-center">
+      <div className="border p-2 aspect-square">
         <Image
           src={product.thumbnail}
           alt={product.title}
