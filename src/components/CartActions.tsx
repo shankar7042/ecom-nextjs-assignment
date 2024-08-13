@@ -25,17 +25,17 @@ const CartActions: React.FC<CartActionsProps> = ({ product }) => {
     <>
       <div className="flex items-center">
         <button
-          onClick={handleIncrementQty}
-          className="border px-3 py-2 bg-green-500 rounded-s-md"
+          onClick={handleDecrementQty}
+          className="border px-3 py-2 bg-red-400 rounded-s-md"
         >
-          +
+          -
         </button>
         <p className="px-4 py-2 border-t border-b">{product.quantity}</p>
         <button
-          onClick={handleDecrementQty}
-          className="border px-3 py-2 bg-red-400 rounded-e-md"
+          onClick={handleIncrementQty}
+          className="border px-3 py-2 bg-green-500 rounded-e-md"
         >
-          -
+          +
         </button>
       </div>
       <div className="ml-10">
