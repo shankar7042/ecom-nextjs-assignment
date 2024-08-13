@@ -13,8 +13,8 @@ const AddToCartBtn: React.FC<AddToCartBtnProps> = ({ product }) => {
   const [show, setShow] = useState(false);
 
   const handleClick = () => {
-    addToCart(product.id);
     setShow(true);
+    addToCart(product.id);
     setTimeout(() => {
       setShow(false);
     }, 700);
@@ -24,6 +24,7 @@ const AddToCartBtn: React.FC<AddToCartBtnProps> = ({ product }) => {
     <button
       onClick={handleClick}
       className="w-full py-2 bg-yellow-400 font-semibold mt-3 rounded-md transition duration-300 hover:bg-yellow-300 relative"
+      disabled={show}
     >
       Add to Cart{" "}
       <span

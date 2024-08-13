@@ -1,5 +1,6 @@
 import { DELIVERY_CHARGES, DISCOUNT_PERCENT, TAX_PERCENT } from "@/constants";
 import { ProductWithQuantity } from "@/context/CartContext";
+import { useCartContext } from "@/hooks/useCartContext";
 import { formatCurrency } from "@/utils/helpers";
 
 interface CartSummaryProps {
@@ -7,12 +8,13 @@ interface CartSummaryProps {
 }
 
 const CartSummary: React.FC<CartSummaryProps> = ({ cartProducts }) => {
+  const { totalQuantity } = useCartContext();
   const subTotal = cartProducts.reduce(
     (acc, curr) => acc + curr.price * curr.quantity,
     0
   );
   const taxAmt = subTotal * (TAX_PERCENT / 100);
-  const deliveryCharges = DELIVERY_CHARGES;
+  const deliveryCharges = totalQuantity === 0 ? 0 : DELIVERY_CHARGES;
   const discount = subTotal * (DISCOUNT_PERCENT / 100);
   const total = subTotal + taxAmt + deliveryCharges - discount;
 
