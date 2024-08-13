@@ -9,7 +9,6 @@ interface AddToCartBtnProps {
 
 const AddToCartBtn: React.FC<AddToCartBtnProps> = ({ product }) => {
   const { addToCart } = useCartContext();
-
   const handleClick = () => {
     addToCart(product.id);
   };

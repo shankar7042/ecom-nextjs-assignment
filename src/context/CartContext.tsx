@@ -59,7 +59,7 @@ export const CartContextProvider: React.FC<PropsWithChildren> = ({
         const product = await fetchProductById(prod.id);
         return {
           ...product,
-          quantity: prod.id,
+          quantity: prod.quantity,
         };
       })
     );
