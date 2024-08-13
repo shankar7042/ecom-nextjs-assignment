@@ -9,6 +9,8 @@ const CartActions: React.FC<CartActionsProps> = ({ product }) => {
   const { incrementCartItem, decrementCartItem, deleteFromCart } =
     useCartContext();
 
+  const totalPrice = product.quantity * product.price;
+
   const handleIncrementQty = () => {
     incrementCartItem(product.id);
   };
@@ -38,7 +40,10 @@ const CartActions: React.FC<CartActionsProps> = ({ product }) => {
           +
         </button>
       </div>
-      <div className="ml-10">
+      <div>
+        <p className="font-semibold">${totalPrice.toFixed(2)}</p>
+      </div>
+      <div>
         <button
           onClick={handleDelete}
           className="bg-red-600 px-4 py-2 rounded-md text-white text-sm"

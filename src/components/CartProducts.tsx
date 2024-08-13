@@ -1,20 +1,16 @@
 "use client";
 
-import { useEffect, useState } from "react";
-
-import { ProductWithQuantity } from "@/context/CartContext";
 import { useCartContext } from "@/hooks/useCartContext";
+import { ProductWithQuantity } from "@/context/CartContext";
+
 import CartItem from "./CartItem";
 
-const CartProducts = () => {
-  const { allCartItemProducts, totalQuantity } = useCartContext();
-  const [cartProducts, setCartProducts] = useState<ProductWithQuantity[]>([]);
+interface CartProductsProps {
+  cartProducts: ProductWithQuantity[];
+}
 
-  useEffect(() => {
-    allCartItemProducts().then((products) => {
-      setCartProducts(products);
-    });
-  }, [allCartItemProducts]);
+const CartProducts: React.FC<CartProductsProps> = ({ cartProducts }) => {
+  const { totalQuantity } = useCartContext();
 
   return totalQuantity === 0 ? (
     <div className="text-center font-semibold text-xl my-4">Cart is empty</div>
