@@ -9,7 +9,7 @@ interface CartItemProps {
 
 const CartItem: React.FC<CartItemProps> = ({ product }) => {
   return (
-    <div className="grid grid-cols-[1fr_3fr_2fr_1fr_1fr] gap-2 items-center place-items-center">
+    <div className="grid grid-cols-[2fr_1fr_2fr] md:grid-cols-[1fr_3fr_2fr_1fr_1fr] gap-2 items-center place-items-center">
       <div className="border p-2 aspect-square">
         <Image
           src={product.thumbnail}
@@ -18,7 +18,7 @@ const CartItem: React.FC<CartItemProps> = ({ product }) => {
           height={100}
         />
       </div>
-      <div className="flex flex-col gap-2">
+      <div className="col-span-2 md:col-auto flex flex-col gap-2">
         <p className="line-clamp-1 font-semibold">{product.title}</p>
         <p className="line-clamp-2 text-sm text-gray-400">
           {product.description}

@@ -17,7 +17,7 @@ const SingleProduct: React.FC<SingleProductProps> = ({ product }) => {
             alt={product.title}
             width={200}
             height={200}
-            className="hover:scale-105 transition duration-300"
+            className="hover:scale-105 transition duration-300 mx-auto"
           />
           <h4 className="line-clamp-1 font-semibold">{product.title}</h4>
           <p className="line-clamp-2 text-sm text-gray-400">
