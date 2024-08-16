@@ -22,6 +22,7 @@ export interface ProductWithQuantity extends IProduct {
 
 interface ICartContext {
   cartProducts: CartProduct[];
+  setOfCartIds: Set<number>;
   addToCart: (id: number) => void;
   deleteFromCart: (id: number) => void;
   incrementCartItem: (id: number) => void;
@@ -32,6 +33,7 @@ interface ICartContext {
 
 export const CartContext = createContext<ICartContext>({
   cartProducts: [],
+  setOfCartIds: new Set(),
   addToCart: (id: number) => {},
   deleteFromCart: (id: number) => {},
   incrementCartItem: (id: number) => {},
@@ -44,7 +46,9 @@ export const CartContextProvider: React.FC<PropsWithChildren> = ({
   children,
 }) => {
   const [cartProducts, setCartProducts] = useState<CartProduct[]>([]);
-
+  const setOfCartIds = useMemo(() => {
+    return new Set(cartProducts.map((c) => c.id));
+  }, [cartProducts]);
   const addToCart = useCallback((prodId: number) => {
     setCartProducts((prevProd) => {
       if (prevProd.findIndex((prod) => prod.id === prodId) === -1) {
@@ -111,6 +115,7 @@ export const CartContextProvider: React.FC<PropsWithChildren> = ({
     <CartContext.Provider
       value={{
         cartProducts,
+        setOfCartIds,
         addToCart,
         totalQuantity,
         allCartItemProducts,
