@@ -2,6 +2,7 @@
 
 import { useCartContext } from "@/hooks/useCartContext";
 import { IProduct } from "@/types/product";
+import { toast } from "sonner";
 
 interface AddToCartBtnProps {
   product: IProduct;
@@ -18,18 +19,26 @@ const AddToCartBtn: React.FC<AddToCartBtnProps> = ({ product }) => {
   const productInCart = setOfCartIds.has(product.id);
   const quantity = !productInCart
     ? 0
-    : cartProducts.find((c) => c.id === product.id)?.quantity;
+    : cartProducts.find((c) => c.id === product.id)!.quantity;
 
   const handleClick = () => {
     addToCart(product.id);
+    toast.success(`${product.title} added in the cart.`);
   };
 
   const handleIncrementQty = () => {
     incrementCartItem(product.id);
+    toast.success(
+      `You've changed '${product.title}' Qunatity to '${quantity + 1}'`
+    );
   };
 
   const handleDecrementQty = () => {
     decrementCartItem(product.id);
+    if (quantity - 1 > 0)
+      toast.success(
+        `You've changed '${product.title}' Qunatity to '${quantity - 1}'`
+      );
   };
 
   return !productInCart ? (

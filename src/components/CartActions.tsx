@@ -1,6 +1,7 @@
 import { ProductWithQuantity } from "@/context/CartContext";
 import { useCartContext } from "@/hooks/useCartContext";
 import { formatCurrency } from "@/utils/helpers";
+import { toast } from "sonner";
 
 interface CartActionsProps {
   product: ProductWithQuantity;
@@ -14,14 +15,24 @@ const CartActions: React.FC<CartActionsProps> = ({ product }) => {
 
   const handleIncrementQty = () => {
     incrementCartItem(product.id);
+    toast.success(
+      `You've changed '${product.title}' Qunatity to '${product.quantity + 1}'`
+    );
   };
 
   const handleDecrementQty = () => {
     decrementCartItem(product.id);
+    if (product.quantity - 1 > 0)
+      toast.success(
+        `You've changed '${product.title}' Qunatity to '${
+          product.quantity - 1
+        }'`
+      );
   };
 
   const handleDelete = () => {
     deleteFromCart(product.id);
+    toast.success(`Succefully removed '${product.title}' from cart`);
   };
 
   return (
